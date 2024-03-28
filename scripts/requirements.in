@@ -3,3 +3,6 @@ bs4
 numpy
 matplotlib
 selenium
+
+# jupyter notebook
+ipykernel
