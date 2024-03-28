@@ -16,13 +16,14 @@ round_ids = range(largest_round_id, largest_round_id - num_rounds - 1, -1)
 
 def scrape_all_buttons(
     tourn_id: int,
+    tourn_name: str,
     largest_round_id: int,
     num_rounds: int,
     base_url: str,
     name_of_rounds: list[str],
-    output_csv_file: Path,
 ) -> None:
     assert num_rounds > 0
+    output_csv_file = (OUTPUT_CSV_DIR / tourn_name.replace(" ", "_")).with_suffix(".csv")
     with requests.Session() as session, open(output_csv_file, "w+", newline="", encoding="utf-8") as file:
         writer = csv.writer(file)
         writer.writerow(["round_name", "group_number", "speaker_number", "speaker_name", "school_name"])
@@ -50,5 +51,4 @@ def scrape_all_buttons(
 if __name__ == "__main__":
     OUTPUT_CSV_DIR.mkdir(parents=True, exist_ok=True)
     tourn_name = "NSDA Nationals Qualifier"
-    output_csv_file = (OUTPUT_CSV_DIR / tourn_name.replace(" ", "_")).with_suffix(".csv")
-    scrape_all_buttons(tourn_id, largest_round_id, num_rounds, base_url, name_of_rounds, output_csv_file)
+    scrape_all_buttons(tourn_id, tourn_name, largest_round_id, num_rounds, base_url, name_of_rounds)
