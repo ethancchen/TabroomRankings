@@ -14,7 +14,7 @@ largest_round_id = 1171709
 round_ids = range(largest_round_id, largest_round_id - num_rounds - 1, -1)
 
 
-def scrape_all_buttons(
+def scrape_tournament_data(
     tourn_id: int,
     tourn_name: str,
     largest_round_id: int,
@@ -50,4 +50,4 @@ def scrape_all_buttons(
 if __name__ == "__main__":
     OUTPUT_CSV_DIR.mkdir(parents=True, exist_ok=True)
     tourn_name = "NSDA Nationals Qualifier"
-    scrape_all_buttons(tourn_id, tourn_name, largest_round_id, num_rounds, name_of_rounds)
+    scrape_tournament_data(tourn_id, tourn_name, largest_round_id, num_rounds, name_of_rounds)
