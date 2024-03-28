@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 
 OUTPUT_CSV_DIR = Path(__file__).resolve().parents[1] / "output_csv"
 
-base_url = "https://www.tabroom.com/index/tourn/results/round_results.mhtml?tourn_id={tourn_id}&round_id={round_id}"
+BASE_URL = "https://www.tabroom.com/index/tourn/results/round_results.mhtml?tourn_id={tourn_id}&round_id={round_id}"
 name_of_rounds = ["Finals", "Semis", "Round 3", "Round 2", "Round 1"]
 num_rounds = len(name_of_rounds)
 tourn_id = 30030
@@ -19,7 +19,6 @@ def scrape_all_buttons(
     tourn_name: str,
     largest_round_id: int,
     num_rounds: int,
-    base_url: str,
     name_of_rounds: list[str],
 ) -> None:
     assert num_rounds > 0
@@ -28,7 +27,7 @@ def scrape_all_buttons(
         writer = csv.writer(file)
         writer.writerow(["round_name", "group_number", "speaker_number", "speaker_name", "school_name"])
         rounds = range(largest_round_id, largest_round_id - num_rounds - 1, -1)
-        tourn_url = base_url.replace("{tourn_id}", str(tourn_id))
+        tourn_url = BASE_URL.replace("{tourn_id}", str(tourn_id))
 
         for curr_round_id, round_name in zip(rounds, name_of_rounds):
             url = tourn_url.replace("{round_id}", str(curr_round_id))
@@ -51,4 +50,4 @@ def scrape_all_buttons(
 if __name__ == "__main__":
     OUTPUT_CSV_DIR.mkdir(parents=True, exist_ok=True)
     tourn_name = "NSDA Nationals Qualifier"
-    scrape_all_buttons(tourn_id, tourn_name, largest_round_id, num_rounds, base_url, name_of_rounds)
+    scrape_all_buttons(tourn_id, tourn_name, largest_round_id, num_rounds, name_of_rounds)
